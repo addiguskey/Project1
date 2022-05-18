@@ -32,18 +32,3 @@ $.ajax(settings).done(function (data) {
 function getRandomInt(max) {
   return Math.ceil(Math.random() * max);
 }
-
-const cocktailApi = {
-  async: true,
-  crossDomain: true,
-  url: "https://the-cocktail-db.p.rapidapi.com/random.php",
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Host": "the-cocktail-db.p.rapidapi.com",
-    "X-RapidAPI-Key": "62fd737dc8mshdc4b2103750a6cap1678d6jsn9a8771e39bcf",
-  },
-};
-
-$.ajax(cocktailApi).done(function (response) {
-  console.log(response);
-});
