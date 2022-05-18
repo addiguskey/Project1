@@ -9,29 +9,29 @@
 // Local Storage - like/dislike btn - store if like
 
 // 10 random songs from top charts API
-// const settings = {
-//   async: true,
-//   crossDomain: true,
-//   url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
-//     190
-//   )}`,
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-//     "X-RapidAPI-Key": "3c0d3ddaafmshda336bd138befc8p11306fjsn93297a18be62",
-//   },
-// };
+const settings = {
+  async: true,
+  crossDomain: true,
+  url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
+    190
+  )}`,
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+    "X-RapidAPI-Key": "146b5a78ebmsh9ba3fd635d9cbe4p17de03jsnfeb09829ed42",
+  },
+};
 
-// $.ajax(settings).done(function (data) {
-//   console.log(data, "musicData");
-//   for (let i = 0; i < data.tracks.length; i++) {
-//     document.querySelector("body").innerHTML += data.tracks[i].title;
-//     document.querySelector("body").innerHTML += data.tracks[i].subtitle;
-//   }
-// });
-// function getRandomInt(max) {
-//   return Math.ceil(Math.random() * max);
-// }
+$.ajax(settings).done(function (data) {
+  console.log(data, "musicData");
+  for (let i = 0; i < data.tracks.length; i++) {
+    // document.querySelector("body").innerHTML += data.tracks[i].title;
+    // document.querySelector("body").innerHTML += data.tracks[i].subtitle;
+  }
+});
+function getRandomInt(max) {
+  return Math.ceil(Math.random() * max);
+}
 
 
 const cocktailApi = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
@@ -84,23 +84,28 @@ $.ajax({
   
   console.log(response)
   console.log(drinkData.strDrink);
-  console.log(drinkData.strIngredient1);
-  console.log(drinkData.strIngredient2);
-  console.log(drinkData.strIngredient3);
-  console.log(drinkData.strIngredient4);
-  console.log(drinkData.strIngredient5);
-  console.log(drinkData.strIngredient6);
-  console.log(drinkData.strIngredient7);
-  console.log(drinkData.strIngredient8);
-  console.log(drinkData.strIngredient9);
-  console.log(drinkData.strIngredient10);
-  console.log(drinkData.strIngredient11);
-  console.log(drinkData.strIngredient12);
-  console.log(drinkData.strIngredient13);
-  console.log(drinkData.strIngredient14);
-  console.log(drinkData.strIngredient15);
-  console.log(drinkData.strstrInstructions);
-  
+  // console.log(drinkData.strIngredient1);
+  // console.log(drinkData.strIngredient2);
+  // console.log(drinkData.strIngredient3);
+  // console.log(drinkData.strIngredient4);
+  // console.log(drinkData.strIngredient5);
+  // console.log(drinkData.strIngredient6);
+  // console.log(drinkData.strIngredient7);
+  // console.log(drinkData.strIngredient8);
+  // console.log(drinkData.strIngredient9);
+  // console.log(drinkData.strIngredient10);
+  // console.log(drinkData.strIngredient11);
+  // console.log(drinkData.strIngredient12);
+  // console.log(drinkData.strIngredient13);
+  // console.log(drinkData.strIngredient14);
+  // console.log(drinkData.strIngredient15);
+  // console.log(drinkData.strstrInstructions);
+  var drinkEntriesDataArray = Object.entries(drinkData)
+  console.log("drinkEntriesDataArray",drinkEntriesDataArray);
+  var ingredientsArray = drinkEntriesDataArray.filter(([key, value]) => key.startsWith("strIngredient") && value && value.trim()).map(([key, value]) => value)
+  console.log("ingredientsArray",ingredientsArray);
+  var measuresArray = drinkEntriesDataArray.filter(([key, value]) => key.startsWith("strMeasure") && value && value.trim()).map(([key, value]) => value);
+  console.log("measuresArray",measuresArray);
 });
 
 //star play
