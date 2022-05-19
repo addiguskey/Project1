@@ -1,6 +1,8 @@
 // random drinks API
 
 // set Variables
+// var thumbsBtns = $(".thumbs-btns");
+$(".thumbs-btns .thumb").hide();
 // eventLister for generate Btn which calls for randomMusic, randomCocktail functions
 // figureout how to generate random music/artist
 // eventLister for refresh Btn for each Music and Cocktail
@@ -98,6 +100,7 @@ $("#start").click(function startImageCycle(el) {
   $(".music-icon").addClass("spin");
   setTimeout(function () {
     stopImageCycle();
+    $(".thumbs-btns .thumb").show();
     $(".drink-icon").attr("src", drinkData.strDrinkThumb);
     $(".drink-title").text(drinkData.strDrink);
     $(".music-icon").attr("style", "transition: 0s");
@@ -117,15 +120,30 @@ function cycleImage(element) {
   $(".drink-icon").attr("src", drinckIconArray[curImageIndex]);
 }
 
-$(".thumb").on('click', function() {
-  var elementClass =  $(this).attr('class')
+$(".thumb").on("click", function () {
+  var elementClass = $(this).attr("class");
   // console.log(elementClass)
-    if (elementClass === 'thumb thumb-up') {
-      console.log('thumb-up')
-      $(this).children().removeClass("bi-hand-thumbs-up").addClass("bi-hand-thumbs-up-fill");
-    }
-    else {
-      console.log('thumb-down')
-      $(this).children().removeClass("bi-hand-thumbs-down").addClass("bi-hand-thumbs-down-fill");
-    }
-})
+  if (elementClass === "thumb thumb-up") {
+    console.log("thumb-up");
+    $(this)
+      .children()
+      .removeClass("bi-hand-thumbs-up")
+      .addClass("bi-hand-thumbs-up-fill");
+    $(this)
+      .siblings()
+      .children()
+      .removeClass("bi-hand-thumbs-down-fill")
+      .addClass("bi-hand-thumbs-down");
+  } else {
+    console.log("thumb-down");
+    $(this)
+      .children()
+      .removeClass("bi-hand-thumbs-down")
+      .addClass("bi-hand-thumbs-down-fill");
+    $(this)
+      .siblings()
+      .children()
+      .removeClass("bi-hand-thumbs-up-fill")
+      .addClass("bi-hand-thumbs-up");
+  }
+});
