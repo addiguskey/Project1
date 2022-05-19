@@ -9,35 +9,34 @@
 // Local Storage - like/dislike btn - store if like
 
 // 10 random songs from top charts API
-const settings = {
-  async: true,
-  crossDomain: true,
-  url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
-    190
-  )}`,
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-    "X-RapidAPI-Key": "986c4bb7b1msh3abb6d107d4427ap172975jsnb368993ed3ad",
-  },
-};
+//comment back in 14-39 !!
 
-var musicTitle;
-var musicPic;
-$.ajax(settings).done(function (data) {
-  console.log(data, "musicData");
-  for (let i = 0; i < data.tracks.length; i++) {
-    console.log(data);
-    musicTitle =data.tracks[0].title;
-    musicPic =data.tracks[0].images.background;
-    // musicTitle=data.tracks[i]
-    // document.querySelector("body").innerHTML += data.tracks[i].title;
-    // document.querySelector("body").innerHTML += data.tracks[i].subtitle;
-  }
-});
-function getRandomInt(max) {
-  return Math.ceil(Math.random() * max);
-}
+// const settings = {
+//   async: true,
+//   crossDomain: true,
+//   url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
+//     190
+//   )}`,
+//   method: "GET",
+//   headers: {
+//     "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+//     "X-RapidAPI-Key": "986c4bb7b1msh3abb6d107d4427ap172975jsnb368993ed3ad",
+//   },
+// };
+
+// var musicTitle;
+// var musicPic;
+// $.ajax(settings).done(function (data) {
+//   console.log(data, "musicData");
+//   for (let i = 0; i < data.tracks.length; i++) {
+//     console.log(data);
+//     musicTitle =data.tracks[0].title;
+//     musicPic =data.tracks[0].images.background;
+//   }
+// });
+// function getRandomInt(max) {
+//   return Math.ceil(Math.random() * max);
+// }
 
 const cocktailApi = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 var drinkData;
@@ -80,11 +79,6 @@ $.ajax({
   var imageArray = drinkEntriesDataArray
     .filter(([key, value]) => key.startsWith("strDrinkThumb"))
     .map(([key, value]) => value);
-  // .filter(
-  //   ([key, value]) =>
-  //     key.startsWith("strIngredient") && value && value.trim()
-  // )
-  // .map(([key, value]) => value);
 });
 
 //star play
@@ -106,9 +100,9 @@ $("#start").click(function startImageCycle(el) {
     stopImageCycle();
     $(".drink-icon").attr("src", drinkData.strDrinkThumb);
     $(".drink-title").text(drinkData.strDrink);
-    $(".music-icon").attr('style',  'transition: 0s');
+    $(".music-icon").attr("style", "transition: 0s");
     $(".music-icon").removeClass("spin");
-    $(".music-icon").attr("src", musicPic,);
+    $(".music-icon").attr("src", musicPic);
     $(".music-title").text(musicTitle);
   }, 3000);
 });
