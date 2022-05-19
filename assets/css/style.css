@@ -39,14 +39,25 @@ h1 {
     /* filter: brightness(0) invert(1); */
 }
 
-.icon-frame button {
+/* .icon-frame button {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
+} */
+
+.thumb {
+    background-color: transparent;
+    padding: 0;
+    border: 0;
 }
 
-button {
+.thumb i {
+    color: #F7C931;
+    font-size: 300%;
+}
+
+#start {
     outline: 0;
     border: none;
     padding: 20px 60px;

@@ -116,3 +116,16 @@ function cycleImage(element) {
   }
   $(".drink-icon").attr("src", drinckIconArray[curImageIndex]);
 }
+
+$(".thumb").on('click', function() {
+  var elementClass =  $(this).attr('class')
+  // console.log(elementClass)
+    if (elementClass === 'thumb thumb-up') {
+      console.log('thumb-up')
+      $(this).children().removeClass("bi-hand-thumbs-up").addClass("bi-hand-thumbs-up-fill");
+    }
+    else {
+      console.log('thumb-down')
+      $(this).children().removeClass("bi-hand-thumbs-down").addClass("bi-hand-thumbs-down-fill");
+    }
+})
