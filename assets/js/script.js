@@ -13,36 +13,42 @@ $(".thumbs-btns .thumb").hide();
 // 10 random songs from top charts API
 //comment back in 14-39 !!
 
-// const settings = {
-//   async: true,
-//   crossDomain: true,
-//   url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
-//     190
-//   )}`,
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-//     "X-RapidAPI-Key": "986c4bb7b1msh3abb6d107d4427ap172975jsnb368993ed3ad",
-//   },
-// };
 
-// var musicTitle;
-// var musicPic;
-// $.ajax(settings).done(function (data) {
-//   console.log(data, "musicData");
-//   for (let i = 0; i < data.tracks.length; i++) {
-//     console.log(data);
-//     musicTitle =data.tracks[0].title;
-//     musicPic =data.tracks[0].images.background;
-//   }
-// });
-// function getRandomInt(max) {
-//   return Math.ceil(Math.random() * max);
-// }
+
+var musicTitle;
+var musicPic;
+
+function getMusicData(){
+    const settings = {
+    async: true,
+    crossDomain: true,
+    url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
+      190
+    )}`,
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+      "X-RapidAPI-Key": "986c4bb7b1msh3abb6d107d4427ap172975jsnb368993ed3ad",
+    },
+  };
+  $.ajax(settings).done(function (data) {
+  console.log(data, "musicData");
+  for (let i = 0; i < data.tracks.length; i++) {
+    console.log(data);
+    musicTitle =data.tracks[0].title;
+    musicPic =data.tracks[0].images.background;
+  }
+});
+}
+
+function getRandomInt(max) {
+  return Math.ceil(Math.random() * max);
+}
 
 const cocktailApi = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 var drinkData;
-$.ajax({
+function getDrinkData(){
+  $.ajax({
   url: cocktailApi,
   method: "GET",
   data: {
@@ -82,6 +88,8 @@ $.ajax({
     .filter(([key, value]) => key.startsWith("strDrinkThumb"))
     .map(([key, value]) => value);
 });
+}
+
 
 //star play
 var drinckIconArray = [
@@ -95,9 +103,20 @@ var curImageIndex = 0; // 0 is displayed by default
 var intervalId; //Remember the ID of the interval so we can stop it later.
 
 $("#start").click(function startImageCycle(el) {
+
   cycleImage(el); //Cycle the image now so feels responsive. Remove if not wanted.
   intervalId = setInterval(cycleImage, 300, el); //Change image every 1000ms (1s)
+  $(".music-icon").attr("src", "./assets/images/music-icon.svg");
+  $(".music-icon").attr("style", "transition: 10s");
   $(".music-icon").addClass("spin");
+  $(".drink-title").text("");
+  $(".music-title").text("");
+  $("#drink-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
+  $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
+  $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
+  $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
+  getMusicData();
+  getDrinkData();
   setTimeout(function () {
     stopImageCycle();
     $(".thumbs-btns .thumb").show();
@@ -134,6 +153,17 @@ $(".thumb").on("click", function () {
       .children()
       .removeClass("bi-hand-thumbs-down-fill")
       .addClass("bi-hand-thumbs-down");
+    var id= $(this).children().attr("id");
+    console.log(id);
+    if(id ==="drink-thumbs-up"){
+      var drinkFavArray = JSON.parse(localStorage.getItem("drinkFav"))||[];
+      drinkFavArray.push(drinkData.strDrink);
+      localStorage.setItem("drinkFav", JSON.stringify(drinkFavArray));
+    }else{
+      var musicFavArray = JSON.parse(localStorage.getItem("musicFav"))||[];
+      musicFavArray.push(musicTitle);
+      localStorage.setItem("musicFav", JSON.stringify(musicFavArray));
+    }
   } else {
     console.log("thumb-down");
     $(this)
