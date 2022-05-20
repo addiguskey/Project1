@@ -12,6 +12,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css"
     />
+    <link rel=“icon” type=“image/x-icon” href=“./assets/images/logo.svg”>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>RHYTHM & BOOZE</title>
   </head>
@@ -33,7 +34,6 @@
             src="./assets/images/drink-icon1.svg"
             alt=""
           />
-
           <h1 class="drink-title fs-4"></h1>
           <!-- COCKTAIL THUMBS UP/DOWN -->
           <div class="thumbs-btns d-flex w-100 justify-content-around">
@@ -48,7 +48,7 @@
             </button>
           </div>
           <!-- Button trigger Drink modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="btn btn-primary" id="drinkModal" data-bs-toggle="modal" data-bs-target="#exampleModal">
             See More
           </button>
           
@@ -57,26 +57,21 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"></h5>
+                  <h3 class="modal-title font-weight-bold" id="drinkModalTitle"></h3>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <img src="" alt="">
+                  <img src="" alt="" id="modalDrinkImage">
                   <div>
-                  <h2>Ingredients:</h2>
-                    <ul>
+                  <h4>Ingredients:</h4>
+                    <ul id="appendDrinkIng">
                     </ul>
                   </div>
-                  <div>
-                    <h2>Measurements:</h2>
-                    <ul>
-                    </ul>
-                  </div>
-                  <h2>Directions: <span></span></h2>
+                  <h4>Directions: </h4>
+                  <p id="drinkDirections"></p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>

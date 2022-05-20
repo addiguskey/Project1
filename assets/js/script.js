@@ -47,6 +47,9 @@ function getRandomInt(max) {
 
 const cocktailApi = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
 var drinkData;
+var ingredientsArray;
+var measuresArray;
+var directionsArray;
 function getDrinkData(){
   $.ajax({
   url: cocktailApi,
@@ -69,14 +72,14 @@ function getDrinkData(){
   var drinkEntriesDataArray = Object.entries(drinkData);
   console.log("drinkEntriesDataArray", drinkEntriesDataArray);
 
-  var ingredientsArray = drinkEntriesDataArray
+  ingredientsArray = drinkEntriesDataArray
     .filter(
       ([key, value]) => key.startsWith("strIngredient") && value && value.trim()
     )
     .map(([key, value]) => value);
   console.log("ingredientsArray", ingredientsArray);
 
-  var measuresArray = drinkEntriesDataArray
+  measuresArray = drinkEntriesDataArray
     .filter(
       ([key, value]) => key.startsWith("strMeasure") && value && value.trim()
     )
@@ -87,6 +90,10 @@ function getDrinkData(){
   var imageArray = drinkEntriesDataArray
     .filter(([key, value]) => key.startsWith("strDrinkThumb"))
     .map(([key, value]) => value);
+
+directionsArray = drinkEntriesDataArray
+      .filter(([key, value]) => key.startsWith("strInstructions"))
+      .map(([key, value]) => value);
 });
 }
 
@@ -103,7 +110,7 @@ var curImageIndex = 0; // 0 is displayed by default
 var intervalId; //Remember the ID of the interval so we can stop it later.
 
 $("#start").click(function startImageCycle(el) {
-
+  $(".thumbs-btns .thumb").hide();
   cycleImage(el); //Cycle the image now so feels responsive. Remove if not wanted.
   intervalId = setInterval(cycleImage, 300, el); //Change image every 1000ms (1s)
   $(".music-icon").attr("src", "./assets/images/music-icon.svg");
@@ -115,7 +122,7 @@ $("#start").click(function startImageCycle(el) {
   $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
   $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
   $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
-  getMusicData();
+  // getMusicData();
   getDrinkData();
   setTimeout(function () {
     stopImageCycle();
@@ -177,3 +184,24 @@ $(".thumb").on("click", function () {
       .addClass("bi-hand-thumbs-up");
   }
 });
+
+function getDrinkRecipe(){
+  $("#drinkModalTitle").text(drinkData.strDrink)
+  $("#modalDrinkImage").attr("src", drinkData.strDrinkThumb)
+  $("#appendDrinkIng").empty()
+ for (let i = 0; i < ingredientsArray.length; i++) {
+   const ingObj = ingredientsArray[i];
+   var ingLi = $("<span>");
+    ingLi.text(ingObj);
+  const measuresObj = measuresArray[i] || "to taste";
+  var measuresSpan = $("<li>",{
+     class: "list-group-item"
+    });
+  measuresSpan.text(" " + measuresObj);
+  ingLi.append(measuresSpan);
+  $("#appendDrinkIng").append(ingLi);
+}
+$("#drinkDirections").text(drinkData.strInstructions)
+
+}
+$("#drinkModal").on('click', getDrinkRecipe)
