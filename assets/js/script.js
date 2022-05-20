@@ -17,7 +17,7 @@ $(".thumbs-btns .thumb").hide();
 
 var musicTitle;
 var musicPic;
-
+var musicModalData;
 function getMusicData(){
     const settings = {
     async: true,
@@ -33,11 +33,9 @@ function getMusicData(){
   };
   $.ajax(settings).done(function (data) {
   console.log(data, "musicData");
-  for (let i = 0; i < data.tracks.length; i++) {
-    console.log(data);
-    musicTitle =data.tracks[0].title;
+    musicModalData =data.tracks
+    musicTitle =data.tracks[0].share.subject;
     musicPic =data.tracks[0].images.background;
-  }
 });
 }
 
@@ -60,11 +58,6 @@ function getDrinkData(){
 }).then(function (response) {
   drinkData = response.drinks[0];
 
-  for (const key in drinkData) {
-    if (drinkData[key] === null) {
-      delete drinkData[key];
-    }
-  }
 
   console.log(response);
   console.log(drinkData.strDrink);
@@ -122,7 +115,7 @@ $("#start").click(function startImageCycle(el) {
   $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
   $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
   $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
-  // getMusicData();
+  getMusicData();
   getDrinkData();
   setTimeout(function () {
     stopImageCycle();
@@ -205,3 +198,18 @@ $("#drinkDirections").text(drinkData.strInstructions)
 
 }
 $("#drinkModal").on('click', getDrinkRecipe)
+
+function getTenSongs(){
+  for (let i = 0; i < musicModalData.length; i++) {
+    const songsObj = musicModalData[i];
+    var songsImg = $("<img>",{
+      src: songsObj.images.background
+    });
+    var songsImg = $("<p>",{
+      src: songsObj.images.background
+    });
+    $(".appendTenSongs").append(songsImg)
+    
+  }
+}
+$("#musicSeeMoreBtn").on('click', getTenSongs)
