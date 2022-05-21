@@ -119,7 +119,7 @@ $("#start").click(function startImageCycle(el) {
   $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
   $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
   $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
-  //getMusicData();
+  getMusicData();
   getDrinkData();
   setTimeout(function () {
     stopImageCycle();
