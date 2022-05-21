@@ -119,7 +119,7 @@ $("#start").click(function startImageCycle(el) {
   $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
   $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
   $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
-  getMusicData();
+  //getMusicData();
   getDrinkData();
   setTimeout(function () {
     stopImageCycle();
@@ -188,13 +188,13 @@ function getDrinkRecipe(){
   $("#drinkModalTitle").text(drinkData.strDrink)
   $("#modalDrinkImage").attr("src", drinkData.strDrinkThumb)
   $("#appendDrinkIng").empty()
- for (let i = 0; i < ingredientsArray.length; i++) {
-   const ingObj = ingredientsArray[i];
-   var ingLi = $("<span>");
+for (let i = 0; i < ingredientsArray.length; i++) {
+  const ingObj = ingredientsArray[i];
+  var ingLi = $("<span>");
     ingLi.text(ingObj);
   const measuresObj = measuresArray[i] || "to taste";
   var measuresSpan = $("<li>",{
-     class: "list-group-item"
+    class: "list-group-item"
     });
   measuresSpan.text(" " + measuresObj);
   ingLi.append(measuresSpan);
@@ -204,18 +204,44 @@ $("#drinkDirections").text(drinkData.strInstructions)
 
 }
 $("#drinkModal").on('click', getDrinkRecipe)
-
+$(".carousel-bg").hide();
 function getTenSongs(){
+  $(".carousel-bg").show();
   for (let i = 0; i < musicModalData.length; i++) {
-    const songsObj = musicModalData[i];
+      const songsObj = musicModalData[i];
+    console.log(songsObj);
+    var carouselItem = $("<div>",{
+      class:"carousel-item",
+    });
+    if(i===0){
+      carouselItem = $("<div>",{
+      class:"carousel-item active",
+    })
+    }else{
+      carouselItem = $("<div>",{
+      class:"carousel-item",
+    })
+    }
     var songsImg = $("<img>",{
-      src: songsObj.images.background
+      src: songsObj.images.background,
+      class:"d-block w-100"
     });
-    var songsImg = $("<p>",{
-      src: songsObj.images.background
+    var carouselCation = $("<div>",{
+      class:"carousel-caption d-none d-md-block"
     });
-    $(".appendTenSongs").append(songsImg)
-    
+    var songsTitle = $("<div>",{
+      class:"carousel-caption d-none d-md-block"
+    });
+    songsTitle.text(songsObj.share.subject);
+    carouselCation.append(songsTitle);
+    carouselItem.append(songsImg);
+    carouselItem.append(carouselCation);
+    $(".carousel-inner").append(carouselItem);
   }
 }
-$("#musicSeeMoreBtn").on('click', getTenSongs)
+function closeCarousel(){
+  $(".carousel-bg").hide();
+}
+
+$("#musicSeeMoreBtn").on('click', getTenSongs);
+$(".carousel-close-btn").on("click", closeCarousel)
