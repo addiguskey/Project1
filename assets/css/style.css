@@ -15,6 +15,7 @@ body {
     background-color: rgb(0, 0, 0);
     /* backdrop-filter: invert(30%); */
     backdrop-filter: blur(6px);
+    position: relative;
 }
 
 header img {
@@ -78,4 +79,41 @@ button:focus {
 
 .music-icon.spin {
     transform: rotate(1800deg);
+}
+
+.carousel-bg {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.943);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel {
+    position: absolute;
+    width: 30vw;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    background-color: transparent;
+    border: none;
+}
+
+.carousel-close-btn {
+    position: absolute;
+    bottom: 10%;
+    background-color: var(--golden);
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.btn-close{
+    background-color: transparent;
+    border-radius: 5px;
 }
