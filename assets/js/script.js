@@ -3,6 +3,8 @@
 // set Variables
 // var thumbsBtns = $(".thumbs-btns");
 $(".thumbs-btns .thumb").hide();
+$("#musicSeeMoreBtn").hide();
+$("#drinkModal").hide();
 // eventLister for generate Btn which calls for randomMusic, randomCocktail functions
 // figureout how to generate random music/artist
 // eventLister for refresh Btn for each Music and Cocktail
@@ -104,6 +106,8 @@ var intervalId; //Remember the ID of the interval so we can stop it later.
 
 $("#start").click(function startImageCycle(el) {
   $(".thumbs-btns .thumb").hide();
+  $("#musicSeeMoreBtn").hide();
+  $("#drinkModal").hide();
   cycleImage(el); //Cycle the image now so feels responsive. Remove if not wanted.
   intervalId = setInterval(cycleImage, 300, el); //Change image every 1000ms (1s)
   $(".music-icon").attr("src", "./assets/images/music-icon.svg");
@@ -120,6 +124,8 @@ $("#start").click(function startImageCycle(el) {
   setTimeout(function () {
     stopImageCycle();
     $(".thumbs-btns .thumb").show();
+    $("#musicSeeMoreBtn").show();
+    $("#drinkModal").show();
     $(".drink-icon").attr("src", drinkData.strDrinkThumb);
     $(".drink-title").text(drinkData.strDrink);
     $(".music-icon").attr("style", "transition: 0s");
