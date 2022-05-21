@@ -15,13 +15,11 @@ $("#drinkModal").hide();
 // 10 random songs from top charts API
 //comment back in 14-39 !!
 
-
-
 var musicTitle;
 var musicPic;
 var musicModalData;
-function getMusicData(){
-    const settings = {
+function getMusicData() {
+  const settings = {
     async: true,
     crossDomain: true,
     url: `https://shazam.p.rapidapi.com/charts/track?locale=en-US&pageSize=10&startFrom=${getRandomInt(
@@ -30,15 +28,15 @@ function getMusicData(){
     method: "GET",
     headers: {
       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-      "X-RapidAPI-Key": "986c4bb7b1msh3abb6d107d4427ap172975jsnb368993ed3ad",
+      "X-RapidAPI-Key": "33db709c53msh855689f75a34780p1e0c08jsnd068537d83b6",
     },
   };
   $.ajax(settings).done(function (data) {
-  console.log(data, "musicData");
-    musicModalData =data.tracks
-    musicTitle =data.tracks[0].share.subject;
-    musicPic =data.tracks[0].images.background;
-});
+    console.log(data, "musicData");
+    musicModalData = data.tracks;
+    musicTitle = data.tracks[0].share.subject;
+    musicPic = data.tracks[0].images.background;
+  });
 }
 
 function getRandomInt(max) {
@@ -50,48 +48,47 @@ var drinkData;
 var ingredientsArray;
 var measuresArray;
 var directionsArray;
-function getDrinkData(){
+function getDrinkData() {
   $.ajax({
-  url: cocktailApi,
-  method: "GET",
-  data: {
-    "api-key": "1",
-  },
-}).then(function (response) {
-  drinkData = response.drinks[0];
+    url: cocktailApi,
+    method: "GET",
+    data: {
+      "api-key": "1",
+    },
+  }).then(function (response) {
+    drinkData = response.drinks[0];
 
+    console.log(response);
+    console.log(drinkData.strDrink);
 
-  console.log(response);
-  console.log(drinkData.strDrink);
+    var drinkEntriesDataArray = Object.entries(drinkData);
+    console.log("drinkEntriesDataArray", drinkEntriesDataArray);
 
-  var drinkEntriesDataArray = Object.entries(drinkData);
-  console.log("drinkEntriesDataArray", drinkEntriesDataArray);
+    ingredientsArray = drinkEntriesDataArray
+      .filter(
+        ([key, value]) =>
+          key.startsWith("strIngredient") && value && value.trim()
+      )
+      .map(([key, value]) => value);
+    console.log("ingredientsArray", ingredientsArray);
 
-  ingredientsArray = drinkEntriesDataArray
-    .filter(
-      ([key, value]) => key.startsWith("strIngredient") && value && value.trim()
-    )
-    .map(([key, value]) => value);
-  console.log("ingredientsArray", ingredientsArray);
+    measuresArray = drinkEntriesDataArray
+      .filter(
+        ([key, value]) => key.startsWith("strMeasure") && value && value.trim()
+      )
+      .map(([key, value]) => value);
+    console.log("measuresArray", measuresArray);
 
-  measuresArray = drinkEntriesDataArray
-    .filter(
-      ([key, value]) => key.startsWith("strMeasure") && value && value.trim()
-    )
-    .map(([key, value]) => value);
-  console.log("measuresArray", measuresArray);
+    console.log("imageArray", imageArray);
+    var imageArray = drinkEntriesDataArray
+      .filter(([key, value]) => key.startsWith("strDrinkThumb"))
+      .map(([key, value]) => value);
 
-  console.log("imageArray", imageArray);
-  var imageArray = drinkEntriesDataArray
-    .filter(([key, value]) => key.startsWith("strDrinkThumb"))
-    .map(([key, value]) => value);
-
-directionsArray = drinkEntriesDataArray
+    directionsArray = drinkEntriesDataArray
       .filter(([key, value]) => key.startsWith("strInstructions"))
       .map(([key, value]) => value);
-});
+  });
 }
-
 
 //star play
 var drinckIconArray = [
@@ -104,25 +101,36 @@ var drinckIconArray = [
 var curImageIndex = 0; // 0 is displayed by default
 var intervalId; //Remember the ID of the interval so we can stop it later.
 
-$("#start").click(function startImageCycle(el) {
+$("#start").click(function startImageCycle() {
+  $(".main-title").text("Smash the START button to get Sloshed");
+  $("#start").text("Restart");
   $(".thumbs-btns .thumb").hide();
   $("#musicSeeMoreBtn").hide();
   $("#drinkModal").hide();
-  cycleImage(el); //Cycle the image now so feels responsive. Remove if not wanted.
-  intervalId = setInterval(cycleImage, 300, el); //Change image every 1000ms (1s)
+  cycleImage(); //Cycle the image now so fes responsive. Remove if not wanted.
+  intervalId = setInterval(cycleImage, 300); //Change image every 1000ms (1s)
   $(".music-icon").attr("src", "./assets/images/music-icon.svg");
   $(".music-icon").attr("style", "transition: 10s");
   $(".music-icon").addClass("spin");
   $(".drink-title").text("");
   $(".music-title").text("");
-  $("#drink-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
-  $("#music-thumbs-up").removeClass("bi-hand-thumbs-up-fill").addClass("bi-hand-thumbs-up");
-  $("#drink-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
-  $("#music-thumbs-down").removeClass("bi-hand-thumbs-down-fill").addClass("bi-hand-thumbs-down");
+  $("#drink-thumbs-up")
+    .removeClass("bi-hand-thumbs-up-fill")
+    .addClass("bi-hand-thumbs-up");
+  $("#music-thumbs-up")
+    .removeClass("bi-hand-thumbs-up-fill")
+    .addClass("bi-hand-thumbs-up");
+  $("#drink-thumbs-down")
+    .removeClass("bi-hand-thumbs-down-fill")
+    .addClass("bi-hand-thumbs-down");
+  $("#music-thumbs-down")
+    .removeClass("bi-hand-thumbs-down-fill")
+    .addClass("bi-hand-thumbs-down");
   getMusicData();
   getDrinkData();
   setTimeout(function () {
     stopImageCycle();
+    $(".main-title").text("Here is your prescription for today");
     $(".thumbs-btns .thumb").show();
     $("#musicSeeMoreBtn").show();
     $("#drinkModal").show();
@@ -144,7 +152,10 @@ function cycleImage(element) {
   }
   $(".drink-icon").attr("src", drinckIconArray[curImageIndex]);
 }
-
+var drinkFavArray;
+var musicFavArray;
+var drinkLike;
+var drinkDislike;
 $(".thumb").on("click", function () {
   var elementClass = $(this).attr("class");
   // console.log(elementClass)
@@ -159,14 +170,14 @@ $(".thumb").on("click", function () {
       .children()
       .removeClass("bi-hand-thumbs-down-fill")
       .addClass("bi-hand-thumbs-down");
-    var id= $(this).children().attr("id");
-    console.log(id);
-    if(id ==="drink-thumbs-up"){
-      var drinkFavArray = JSON.parse(localStorage.getItem("drinkFav"))||[];
+    drinkLike = $(this).children().attr("id");
+    console.log(drinkLike);
+    if (drinkLike === "drink-thumbs-up") {
+      drinkFavArray = JSON.parse(localStorage.getItem("drinkFav")) || [];
       drinkFavArray.push(drinkData.strDrink);
       localStorage.setItem("drinkFav", JSON.stringify(drinkFavArray));
-    }else{
-      var musicFavArray = JSON.parse(localStorage.getItem("musicFav"))||[];
+    } else {
+      musicFavArray = JSON.parse(localStorage.getItem("musicFav")) || [];
       musicFavArray.push(musicTitle);
       localStorage.setItem("musicFav", JSON.stringify(musicFavArray));
     }
@@ -181,67 +192,134 @@ $(".thumb").on("click", function () {
       .children()
       .removeClass("bi-hand-thumbs-up-fill")
       .addClass("bi-hand-thumbs-up");
+    drinkDislike = $(this).attr("id");
+    if (drinkDislike === "drink-thumbs-down") {
+      console.log(drinkDislike);
+      $(".drink-title").text("");
+      cycleImage();
+      intervalId = setInterval(cycleImage, 300);
+      getDrinkData();
+      setTimeout(function () {
+        stopImageCycle();
+        $(".thumbs-btns .thumb").show();
+        $("#drinkModal").show();
+        $(".drink-icon").attr("src", drinkData.strDrinkThumb);
+        $(".drink-title").text(drinkData.strDrink);
+      }, 3000);
+    } else {
+      console.log(drinkDislike);
+      $(".music-icon").attr("src", "./assets/images/music-icon.svg");
+      $(".music-icon").attr("style", "transition: 10s");
+      $(".music-icon").addClass("spin");
+      $(".music-title").text("");
+      getMusicData();
+      setTimeout(function () {
+        stopImageCycle();
+        $(".thumbs-btns .thumb").show();
+        $("#musicSeeMoreBtn").show();
+        $(".music-icon").attr("style", "transition: 0s");
+        $(".music-icon").removeClass("spin");
+        $(".music-icon").attr("src", musicPic);
+        $(".music-title").text(musicTitle);
+      }, 3000);
+    }
   }
 });
-
-function getDrinkRecipe(){
-  $("#drinkModalTitle").text(drinkData.strDrink)
-  $("#modalDrinkImage").attr("src", drinkData.strDrinkThumb)
-  $("#appendDrinkIng").empty()
-for (let i = 0; i < ingredientsArray.length; i++) {
-  const ingObj = ingredientsArray[i];
-  var ingLi = $("<span>");
-    ingLi.text(ingObj);
-  const measuresObj = measuresArray[i] || "to taste";
-  var measuresSpan = $("<li>",{
-    class: "list-group-item"
+// function for fave drinks list to append to offCanvas
+function getFaveDrinksLi() {
+  drinkFavArray = JSON.parse(localStorage.getItem("drinkFav")) || [];
+  for (let i = 0; i < drinkFavArray.length; i++) {
+    const faveDrinkObj = drinkFavArray[i];
+    var faveDrinkLi = $("<li>", {
+      class: "list-group-item",
     });
-  measuresSpan.text(" " + measuresObj);
-  ingLi.append(measuresSpan);
-  $("#appendDrinkIng").append(ingLi);
+    faveDrinkLi.text(faveDrinkObj);
+    $("#append-fav-drinks").append(faveDrinkLi);
+  }
 }
-$("#drinkDirections").text(drinkData.strInstructions)
+// function for fave songs list to append to offCanvas
+function getFaveSongsLi() {
+  musicFavArray = JSON.parse(localStorage.getItem("musicFav")) || [];
+  for (let i = 0; i < musicFavArray.length; i++) {
+    const faceMusicObj = musicFavArray[i];
+    var faveMusicLi = $("<li>", {
+      class: "list-group-item",
+    });
+    faveMusicLi.text(faceMusicObj);
+    $("#append-fav-songs").append(faveMusicLi);
+  }
+}
 
+$("#clear-drinks-history").on("click", function () {
+  $("#append-fav-drinks").empty();
+  localStorage.removeItem("drinkFav");
+});
+
+$("#clear-music-history").on("click", function () {
+  $("#append-fav-songs").empty();
+  localStorage.removeItem("musicFav");
+});
+
+function getDrinkRecipe() {
+  $("#drinkModalTitle").text(drinkData.strDrink);
+  $("#modalDrinkImage").attr("src", drinkData.strDrinkThumb);
+  $("#appendDrinkIng").empty();
+  for (let i = 0; i < ingredientsArray.length; i++) {
+    const ingObj = ingredientsArray[i];
+    var ingLi = $("<span>");
+    ingLi.text(ingObj);
+    const measuresObj = measuresArray[i] || "to taste";
+    var measuresSpan = $("<li>", {
+      class: "list-group-item",
+    });
+    measuresSpan.text(" " + measuresObj);
+    ingLi.append(measuresSpan);
+    $("#appendDrinkIng").append(ingLi);
+  }
+  $("#drinkDirections").text(drinkData.strInstructions);
 }
-$("#drinkModal").on('click', getDrinkRecipe)
+$("#drinkModal").on("click", getDrinkRecipe);
 $(".carousel-bg").hide();
-function getTenSongs(){
+function getTenSongs() {
   $(".carousel-bg").show();
   for (let i = 0; i < musicModalData.length; i++) {
-      const songsObj = musicModalData[i];
+    const songsObj = musicModalData[i];
     console.log(songsObj);
-    var carouselItem = $("<div>",{
-      class:"carousel-item",
+    var carouselItem = $("<div>", {
+      class: "carousel-item",
     });
-    if(i===0){
-      carouselItem = $("<div>",{
-      class:"carousel-item active",
-    })
-    }else{
-      carouselItem = $("<div>",{
-      class:"carousel-item",
-    })
+    if (i === 0) {
+      carouselItem = $("<div>", {
+        class: "carousel-item active",
+      });
+    } else {
+      carouselItem = $("<div>", {
+        class: "carousel-item",
+      });
     }
-    var songsImg = $("<img>",{
+    var songsImg = $("<img>", {
       src: songsObj.images.background,
-      class:"d-block w-100"
+      class: "d-block w-100",
     });
-    var carouselCation = $("<div>",{
-      class:"carousel-caption d-none d-md-block"
+    var carouselCaption = $("<div>", {
+      class: "carousel-caption d-none d-md-block",
     });
-    var songsTitle = $("<div>",{
-      class:"carousel-caption d-none d-md-block"
+    var songsTitle = $("<h4>", {
+      class: "carousel-caption d-none d-md-block bg-black rounded-3",
     });
     songsTitle.text(songsObj.share.subject);
-    carouselCation.append(songsTitle);
+    carouselCaption.append(songsTitle);
     carouselItem.append(songsImg);
-    carouselItem.append(carouselCation);
+    carouselItem.append(carouselCaption);
     $(".carousel-inner").append(carouselItem);
   }
 }
-function closeCarousel(){
+function closeCarousel() {
   $(".carousel-bg").hide();
 }
 
-$("#musicSeeMoreBtn").on('click', getTenSongs);
-$(".carousel-close-btn").on("click", closeCarousel)
+// EVENT LISTENERS FOR BTNS
+$("#musicSeeMoreBtn").on("click", getTenSongs);
+$(".carousel-close-btn").on("click", closeCarousel);
+$("#fave-drinks-btn").on("click", getFaveDrinksLi);
+$("#fave-songs-btn").on("click", getFaveSongsLi);
