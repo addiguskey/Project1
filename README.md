@@ -28,6 +28,9 @@ This project was dedicated to the pursuit of discovering new music and cocktails
 
 ## Usage
 
+![RHYTHM   BOOZE](https://user-images.githubusercontent.com/104233323/169727174-9ec35aac-a9a2-4e69-ab12-466c9fba79fc.gif)
+
+
 - When the user accesses Rythm & Booze
 - Then they are shown the main page
 - When the user clicks the start button
