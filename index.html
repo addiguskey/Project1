@@ -33,7 +33,7 @@
         class="icon-frame d-flex justify-content-between align-items-center my-4"
       >
         <!-- DIV FOR COCKTAIL SIDE -->
-        <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column align-items-center w-55">
           <img
             class="drink-icon"
             src="./assets/images/drink-icon1.svg"
@@ -80,9 +80,7 @@
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
-                  >
-                    <i class="bi bi-x"></i>
-                  </button>
+                  ></button>
                 </div>
                 <div class="modal-body">
                   <img src="" alt="" id="modalDrinkImage" />
@@ -122,19 +120,15 @@
             aria-labelledby="offcanvasLeftLabel"
           >
             <div class="offcanvas-header">
-              <h3 id="offcanvasLeftLabel">PREVIOUSLY...</h3>
+              <h2 id="offcanvasLeftLabel">Drink Favorites</h2>
               <button
                 type="button"
-                class="btn-close text-reset"
+                class="btn-close text-reset bg-light"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="offcanvas-body" id="append-fav-drinks">
-              <!-- <ul>
-                <li></li>
-              </ul> -->
-            </div>
+            <div class="offcanvas-body" id="append-fav-drinks"></div>
             <button
               class="btn btn-danger btn-block"
               type="button"
@@ -145,10 +139,8 @@
           </div>
         </div>
 
-        <!-- DRINK FAVORITES BAR -->
-
         <!-- DIV FOR MUSIC SIDE -->
-        <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column align-items-center w-55">
           <img class="music-icon" src="./assets/images/music-icon.svg" alt="" />
           <h1 class="music-title fs-4"></h1>
           <!-- MUSIC THUMBS UP/DOWN -->
@@ -181,10 +173,10 @@
             aria-labelledby="offcanvasRightLabel"
           >
             <div class="offcanvas-header">
-              <h3 id="offcanvasRightLabel">PREVIOUSLY...</h3>
+              <h2 id="offcanvasRightLabel">Music Favorites</h2>
               <button
                 type="button"
-                class="btn-close text-reset"
+                class="btn-close text-reset bg-light"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
@@ -200,11 +192,17 @@
           </div>
         </div>
       </div>
-      <!-- Generate Button -->
+      <!-- START Button -->
       <button id="start">START</button>
     </section>
     <!-- Music carousel -->
     <div class="carousel-bg">
+      <button
+        type="button"
+        class="btn-close text-light"
+        aria-label="Close"
+        id="carousel-x"
+      ></button>
       <div
         id="carouselExampleCaptions"
         class="carousel slide"

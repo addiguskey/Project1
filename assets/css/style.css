@@ -36,8 +36,8 @@ h1 {
 .icon-frame img {
     width: 200px;
     height: 200px;
+    border-radius: 3mm;
 }
-
 
 .thumb {
     background-color: transparent;
@@ -68,6 +68,10 @@ button:focus {
     outline: 0;
 }
 
+.drink-title {
+    text-align: center;
+}
+
 .music-icon {
     transition: 10s;
 }
@@ -75,7 +79,10 @@ button:focus {
 .music-icon.spin {
     transform: rotate(1800deg);
 }
-
+.music-title {
+    width: 70%;
+    text-align: center;
+}
 .carousel-bg {
     width: 100vw;
     height: 100vh;
@@ -108,7 +115,25 @@ button:focus {
     padding: 10px 30px;
     border-radius: 5px;
 }
+#carousel-x {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    background-color: white;
+    width: 4rem;
+    height: 4rem;
+}
 .btn-close{
     background-color: transparent;
     border-radius: 5px;
+}
+
+.offcanvas {
+    background-color: rgba(57, 57, 57, 0.664);
+    color: white;
+    font-size: 1.5rem;
+}
+
+.btn-danger {
+    font-size: 1.5rem;
 }
