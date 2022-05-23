@@ -21,7 +21,7 @@ function getMusicData() {
     method: "GET",
     headers: {
       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-      "X-RapidAPI-Key": "33db709c53msh855689f75a34780p1e0c08jsnd068537d83b6",
+      "X-RapidAPI-Key": "6f27f2e39dmsh9c874ef8b0307c6p1cee6bjsn7b2e2cb10aac",
     },
   };
   $.ajax(settings).done(function (data) {
@@ -299,6 +299,7 @@ $("#drinkModal").on("click", getDrinkRecipe);
 // function/ event listner for music carousel
 $(".carousel-bg").hide();
 function getTenSongs() {
+  $(".carousel-inner").empty();
   $(".carousel-bg").show();
   for (let i = 0; i < musicModalData.length; i++) {
     const songsObj = musicModalData[i];
