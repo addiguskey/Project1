@@ -343,3 +343,12 @@ $(".carousel-close-btn").on("click", closeCarousel);
 $("#carousel-x").on("click", closeCarousel);
 $("#fave-drinks-btn").on("click", getFaveDrinksLi);
 $("#fave-songs-btn").on("click", getFaveSongsLi);
+
+
+//mobile screen size text and class change
+
+if ($(window).width() < 400) {
+  $("#musicSeeMoreBtn").text("More Songs");
+  $(".drink-title").removeClass("fs-4");
+  $(".music-title").removeClass("fs-4");
+}

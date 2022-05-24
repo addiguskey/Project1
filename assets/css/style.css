@@ -8,13 +8,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: black;
-    /* background-image: url("../images/bar-bg-img.jpg"); */
-    background-repeat: no-repeat;
-    background-size: cover;
     overflow: hidden;
-    background-color: rgb(0, 0, 0);
-    /* backdrop-filter: invert(30%); */
-    backdrop-filter: blur(6px);
     position: relative;
 }
 
@@ -136,4 +130,124 @@ button:focus {
 
 .btn-danger {
     font-size: 1.5rem;
+}
+
+/* media query for mobile size */
+@media screen and (max-height:800px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .icon-frame {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+@media screen and (max-width:950px) {
+    .icon-frame {
+        width: 85%;
+    }
+}
+
+
+@media screen and (max-width:750px) {
+    header img {
+        width: 500px;
+    }
+
+    .icon-frame img {
+        width: 150px;
+        height: 150px;
+        border-radius: 3mm;
+    }
+
+    .icon-frame {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:550px) {
+    header img {
+        width: 90vw;
+    }
+
+    .main-title {
+        font-size: 1.3rem;
+    }
+
+    .icon-frame img {
+        width: 100px;
+        height: 100px;
+        border-radius: 3mm;
+    }
+
+    .icon-frame {
+        width: 100%;
+    }
+
+    #start {
+        padding: 10px 30px;
+    }
+
+    .icon-frame .left,
+    .right {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:400px) {
+
+    .main-title {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .icon-frame img {
+        width: 100px;
+        height: 100px;
+        border-radius: 3mm;
+    }
+
+    .icon-frame {
+        width: 100%;
+        height: 100%;
+    }
+
+    .drink-title,
+    .music-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width:300px) {
+
+    .main-title {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .icon-frame img {
+        width: 80px;
+        height: 80px;
+        border-radius: 3mm;
+    }
+
+    .icon-frame {
+        width: 90%;
+    }
+
+    .thumb i {
+        font-size: 200%;
+    }
+
+    .bi-bookmark-heart {
+        font-size: 200%;
+    }
+
+    .drink-title,
+    .music-title {
+        font-size: 1rem;
+    }
 }
