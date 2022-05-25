@@ -67,7 +67,7 @@ button:focus {
 }
 
 .music-icon {
-    transition: 10s;
+    /* transition: 10s; */
 }
 
 .music-icon.spin {
