@@ -29,6 +29,23 @@ function getMusicData() {
     musicModalData = data.tracks;
     musicTitle = data.tracks[0].share.subject;
     musicPic = data.tracks[0].images.background;
+
+    // if musicTitle too long in mobile version then get shorter
+    var titleLength = musicTitle.length;
+    console.log("titleLength",titleLength);
+    // if ($(window).width() < 750) {
+      if(titleLength > 25){
+      console.log(getWords(musicTitle));
+      musicTitle = getWords(musicTitle) + "..."
+      console.log(musicTitle);
+      }else{
+          musicTitle===musicTitle;
+          console.log(musicTitle);
+      }
+    // }
+    function getWords(str) {
+        return str.split(/\s+/).slice(0,5).join(" ");
+    }
   });
 }
 
@@ -102,6 +119,7 @@ $("#start").click(function startImageCycle() {
   $(".music-icon").attr("src", "./assets/images/music-icon.svg");
   $(".music-icon").attr("style", "transition: 10s");
   $(".music-icon").addClass("spin");
+  $(".music-icon").css("transition", "10s");
   $(".drink-title").text("");
   $(".music-title").text("");
   $("#drink-thumbs-up")
@@ -213,6 +231,7 @@ $(".thumb").on("click", function () {
       $(".music-icon").attr("src", "./assets/images/music-icon.svg");
       $(".music-icon").attr("style", "transition: 10s");
       $(".music-icon").addClass("spin");
+      $(".music-icon").css("transition", "10s");
       $(".music-title").text("");
       getMusicData();
       setTimeout(function () {
